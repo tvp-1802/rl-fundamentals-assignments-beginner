@@ -77,6 +77,7 @@ class EpsilonGreedy:
             # HOMEWORK: exploit by selecting the action with the highest estimated value
             # (use argmax_ties_random to break ties randomly)
             # TODO: Implement this line
+            return argmax_ties_random(self.q_values)
 
     def simple_update(self, action: int, reward: float) -> None:
         """
@@ -88,9 +89,11 @@ class EpsilonGreedy:
         """
         # HOMEWORK: Increment N(A) for the selected action (c.f. self.action_counts).
         # TODO: Implement this line
+    self.action_counts[action] += 1
 
         # HOMEWORK: Update self.q_values[action] using the incremental formula for sample averages.
         # TODO: Implement this line
+    self.q_values[action] += (reward - self.q_values[action]) / self.action_counts[action]
 
     def weighted_update(self, action: int, reward: float) -> None:
         """
@@ -103,6 +106,7 @@ class EpsilonGreedy:
         # HOMEWORK:
         # Update self.q_values[action] using the weighted average formula with step size alpha.
         # TODO: Implement this line
+    self.q_values[action] += alpha * (reward - self.q_values[action])
 
     def train(self) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """
